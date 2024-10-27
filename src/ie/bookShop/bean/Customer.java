@@ -1,5 +1,7 @@
 package ie.bookShop.bean;
 
+import ie.bookShop.enums.Gender;
+
 public class Customer {
     private Integer customerId;
     private String firstName;
@@ -7,9 +9,11 @@ public class Customer {
     private String email;
     private String address;
     private String phoneNumber;
+    private Gender gender;
 
+    public Customer(){}
     public Customer(Integer customerId, String firstName, String lastName,
-                    String email, String address, String phoneNumber) {
+                    String email, String address, String phoneNumber, Gender gender) {
 
         this.customerId = customerId;
         this.firstName = firstName;
@@ -17,6 +21,7 @@ public class Customer {
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.gender = gender;
     }
 
     public Integer getCustomerId() {
@@ -67,12 +72,19 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    // Determines whether two objects are equal or not based on content they hold.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
-
-        Customer customer = (Customer) o;
+        if (!(o instanceof Customer customer)) return false;
 
         if (getCustomerId() != null ? !getCustomerId().equals(customer.getCustomerId()) : customer.getCustomerId() != null)
             return false;
@@ -83,8 +95,12 @@ public class Customer {
         if (getEmail() != null ? !getEmail().equals(customer.getEmail()) : customer.getEmail() != null) return false;
         if (getAddress() != null ? !getAddress().equals(customer.getAddress()) : customer.getAddress() != null)
             return false;
-        return getPhoneNumber() != null ? getPhoneNumber().equals(customer.getPhoneNumber()) : customer.getPhoneNumber() == null;
+        if (getPhoneNumber() != null ? !getPhoneNumber().equals(customer.getPhoneNumber()) : customer.getPhoneNumber() != null)
+            return false;
+        return getGender() == customer.getGender();
     }
+
+    //Generates a hash code  for an object.
 
     @Override
     public int hashCode() {
@@ -94,9 +110,11 @@ public class Customer {
         result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
         result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
         result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
+        result = 31 * result + (getGender() != null ? getGender().hashCode() : 0);
         return result;
     }
 
+    //Provides the result of printing the object in human-readable way, not a memory address
     @Override
     public String toString() {
         return "Customer{" +
@@ -106,6 +124,7 @@ public class Customer {
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender=" + gender +
                 '}';
     }
 }

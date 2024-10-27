@@ -6,14 +6,11 @@ import java.util.List;
 
 public interface OrderItemService {
 
-    void saveOrderItem();
-
-    List<OrderItem> getAllItems();
-
-    OrderItem getOrderItem();
-
-    OrderItem updateOrderItem();
-
-    void delete();
+    OrderItem createOrderItem(OrderItem orderItem);
+    OrderItem getOrderItemById(Long id);
+    List<OrderItem> getAllOrderItems();
+    List<OrderItem> getOrderItemsByOrderId(Long orderId);
+    OrderItem updateOrderItem(OrderItem orderItem);
+    void deleteOrderItem(Long id);
 
 }

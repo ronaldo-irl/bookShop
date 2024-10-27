@@ -61,6 +61,7 @@ public class Order {
     }
 
     public BigDecimal getTotalPrice() {
+        //TotalPrice is calculated by summing up the items the customer chose.
         if(!orderItemList.isEmpty()){
             return  orderItemList.stream().filter(total -> null != total.getUnitPrice())
                     .map(OrderItem::getUnitPrice)
@@ -82,6 +83,7 @@ public class Order {
         this.orderItemList = orderItemList;
     }
 
+    // Determines whether two objects are equal or not based on content they hold.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,6 +101,7 @@ public class Order {
         return getOrderItemList() != null ? getOrderItemList().equals(order.getOrderItemList()) : order.getOrderItemList() == null;
     }
 
+    //Generates a hash code  for an object.
     @Override
     public int hashCode() {
         int result = getOrderId() != null ? getOrderId().hashCode() : 0;
@@ -110,6 +113,7 @@ public class Order {
         return result;
     }
 
+    //Provides the result of printing the object in human-readable way, not a memory address
     @Override
     public String toString() {
         return "Order{" +

@@ -2,6 +2,7 @@ package ie.bookShop.service;
 
 
 import ie.bookShop.bean.Customer;
+import ie.bookShop.enums.Gender;
 import ie.bookShop.utils.BookUtils;
 
 import java.util.ArrayList;
@@ -15,9 +16,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void createCustomer() {
-        Customer customer1 = new Customer(BookUtils.getNextId(), "Ronaldo", "Martins", "ronaldo@tus.ie", "Belgard Heights", "089222999");
-        Customer customer2 = new Customer(BookUtils.getNextId(), "Joe", "Bloggs", "joebloggs@tus.ie", "Athlone Main Road", "0832020909");
-        Customer customer3 = new Customer(BookUtils.getNextId(), "Jane", "Doe", "jane@tus.ie", "Dublin city", "089222999");
+        Customer customer1 = new Customer(BookUtils.getNextId(), "Ronaldo", "Martins", "ronaldo@tus.ie", "Belgard Heights", "089222999", Gender.MALE);
+        Customer customer2 = new Customer(BookUtils.getNextId(), "Joe", "Bloggs", "joebloggs@tus.ie", "Athlone Main Road", "0832020909", Gender.MALE);
+        Customer customer3 = new Customer(BookUtils.getNextId(), "Jane", "Doe", "jane@tus.ie", "Dublin city", "089222999", Gender.FEMALE);
 
         this.customers.add(customer1);
         this.customers.add(customer2);
