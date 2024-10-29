@@ -4,7 +4,7 @@ import ie.bookShop.enums.Genre;
 
 import java.math.BigDecimal;
 
-public abstract class Book {
+public abstract sealed class Book permits EBook, PhysicalBook {
     private Integer bookId;
     private String title;
     private String author;

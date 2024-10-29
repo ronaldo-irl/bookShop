@@ -5,7 +5,7 @@ import ie.bookShop.enums.Genre;
 
 import java.math.BigDecimal;
 
-public class EBook extends Book {
+public final class EBook extends Book {
     private String format;
     private String downloadLink;
 

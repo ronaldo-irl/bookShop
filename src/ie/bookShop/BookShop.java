@@ -137,7 +137,6 @@ public class BookShop {
 
         customerChoice( getUserInput(userChoice));
 
-
     }
 
     private static void customerChoice(String choice) {
@@ -150,7 +149,6 @@ public class BookShop {
             case 3:
                 return;
         }
-
     }
 
     private static Customer createCustomerFromCustomerInput() {

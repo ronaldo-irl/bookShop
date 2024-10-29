@@ -4,7 +4,7 @@ import ie.bookShop.enums.Genre;
 
 import java.math.BigDecimal;
 
-public class PhysicalBook extends Book{
+public final class  PhysicalBook extends Book{
 
     private String format;
     private BigDecimal price;
