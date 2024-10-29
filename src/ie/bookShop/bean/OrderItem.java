@@ -16,6 +16,13 @@ public class OrderItem {
         this.unitPrice = unitPrice;
     }
 
+    public OrderItem(OrderItem item) {
+        this.itemId = item.itemId;
+        this.bookId = item.bookId;
+        this.quantity = item.quantity;
+        this.unitPrice = item.unitPrice;
+    }
+
     public Integer getItemId() {
         return itemId;
     }

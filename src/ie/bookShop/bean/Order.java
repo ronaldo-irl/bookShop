@@ -3,6 +3,7 @@ package ie.bookShop.bean;
 import ie.bookShop.utils.BookUtils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
@@ -22,7 +23,10 @@ public class Order {
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.totalPrice = totalPrice;
-        this.orderItemList = orderItemList;
+        this.orderItemList = new ArrayList<>();
+
+        //protect against items being modified
+        orderItemList.forEach( item -> this.orderItemList.add(new OrderItem(item)));
     }
 
     public Integer getOrderId() {
