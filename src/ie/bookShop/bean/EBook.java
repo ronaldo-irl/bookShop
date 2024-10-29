@@ -6,7 +6,6 @@ import ie.bookShop.enums.Genre;
 import java.math.BigDecimal;
 
 public class EBook extends Book {
-
     private String format;
     private String downloadLink;
 
@@ -17,6 +16,10 @@ public class EBook extends Book {
         this.format = format;
         this.downloadLink = downloadLink;
         this.price = price;
+    }
+
+    public EBook(Integer bookId, String title, String author, String isbn, int publicationYear, Genre genre, String publisher, int numberOfPages, String downloadLink) {
+        this(bookId, title, author, isbn, publicationYear, genre, publisher, numberOfPages, BigDecimal.ZERO, "PDF", downloadLink);
     }
 
     @Override
@@ -67,7 +70,7 @@ public class EBook extends Book {
 
     @Override
     public String toString() {
-        return "EBook{" +
+        return super.toString() + ", EBook{" +
                 "format='" + format + '\'' +
                 ", downloadLink='" + downloadLink + '\'' +
                 ", price=" + price +

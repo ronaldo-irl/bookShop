@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface OrderService {
 
-    void save();
+    void save(Order order);
 
-    Order getOrder();
+    Order getOrder(Integer orderId);
 
-    Order updateOrder();
+    Order updateOrder(Order order);
 
     List<Order> getAllOrders();
 
-    void delete();
+    void delete(Integer orderId);
 
 }

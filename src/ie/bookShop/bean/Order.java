@@ -3,22 +3,20 @@ package ie.bookShop.bean;
 import ie.bookShop.utils.BookUtils;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Order {
     private Integer orderId;
     private Integer customerId;
-    private LocalDate orderDate;
+    private String orderDate;
     private String  orderStatus;
     private BigDecimal totalPrice;
 
     private List<OrderItem> orderItemList;
 
     public Order(){}
-    public Order(Integer orderId, Integer customerId, LocalDate orderDate, String orderStatus,
-                 BigDecimal totalPrice, List<OrderItem> orderItemList) {
+    public Order(Integer orderId, Integer customerId, String orderDate, String orderStatus,
+                 List<OrderItem> orderItemList, BigDecimal totalPrice) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.orderDate = orderDate;
@@ -27,10 +25,18 @@ public class Order {
         this.orderItemList = orderItemList;
     }
 
+ /*   public String getFormattedDate() {
+        try {
+            return BookUtils.formatDate(orderDate);
+        } catch (ParseException e) {
+            System.out.println("Invalid date!");
+        }
+        return null;
+    }*/
+
     public Integer getOrderId() {
         return orderId;
     }
-
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
@@ -43,12 +49,11 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public LocalDate getOrderDate() {
-        //return the date on format: ddMMyyyy
-        return BookUtils.formatDate(orderDate,"ddMMyyyy");
+    public String getOrderDate()  {
+        return BookUtils.formatDate(this.orderDate);
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -62,8 +67,8 @@ public class Order {
 
     public BigDecimal getTotalPrice() {
         //TotalPrice is calculated by summing up the items the customer chose.
-        if(!orderItemList.isEmpty()){
-            return  orderItemList.stream().filter(total -> null != total.getUnitPrice())
+        if(!this.orderItemList.isEmpty()){
+            return  this.orderItemList.stream().filter(total -> null != total.getUnitPrice())
                     .map(OrderItem::getUnitPrice)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
 

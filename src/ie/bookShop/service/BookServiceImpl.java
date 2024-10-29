@@ -41,6 +41,8 @@ public class BookServiceImpl implements BookService {
 
         Book book10 = new PhysicalBook(BookUtils.getNextId(), "Clean Code: A Handbook of Agile Software Craftsmanship", "Robert C. Martin", "0132350882", 2008, Genre.SOFTWARE_DEVELOPMENT, "Prentice Hall", 464, new BigDecimal("44.99"), "Paperback");
 
+        Book book11 = new EBook(BookUtils.getNextId(), "Free Guide to Software Development", "Ronaldo Martins", "0201896834", 2024, Genre.SOFTWARE_DEVELOPMENT, "TUS", 32, "http://tuslibrary.ie");
+
         this.bookList.add(book1);
         this.bookList.add(book2);
         this.bookList.add(book3);
@@ -51,6 +53,7 @@ public class BookServiceImpl implements BookService {
         this.bookList.add(book8);
         this.bookList.add(book9);
         this.bookList.add(book10);
+        this.bookList.add(book11);
     }
 
     @Override

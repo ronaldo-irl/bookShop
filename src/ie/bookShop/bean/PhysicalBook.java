@@ -52,7 +52,7 @@ public class PhysicalBook extends Book{
 
     @Override
     public String toString() {
-        return "PhysicalBook{" +
+        return super.toString() + ", PhysicalBook{" +
                 "format='" + format + '\'' +
                 ", price=" + price +
                 '}';

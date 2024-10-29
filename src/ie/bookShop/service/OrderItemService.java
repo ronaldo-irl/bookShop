@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderItemService {
 
-    OrderItem createOrderItem(OrderItem orderItem);
+    void createOrderItem(OrderItem orderItem);
     OrderItem getOrderItemById(Long id);
     List<OrderItem> getAllOrderItems();
     List<OrderItem> getOrderItemsByOrderId(Long orderId);

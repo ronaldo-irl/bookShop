@@ -2,17 +2,17 @@ package ie.bookShop.service;
 
 import ie.bookShop.bean.OrderItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItemServiceImpl implements OrderItemService{
 
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
     @Override
-    public OrderItem createOrderItem(OrderItem orderItem) {
-        this.getAllOrderItems().add(orderItem);
-        return null;
+    public void createOrderItem(OrderItem orderItem) {
+            this.orderItemList.add(orderItem);
     }
-
     @Override
     public OrderItem getOrderItemById(Long id) {
         return null;

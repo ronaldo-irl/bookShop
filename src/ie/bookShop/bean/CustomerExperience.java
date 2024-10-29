@@ -1,3 +1,5 @@
 package ie.bookShop.bean;
 
-public record CustomerExperience(Integer customerId, String reviewDescription, int rate ) { }
+import java.time.LocalDate;
+
+public record CustomerExperience(Integer customerId, String reviewDescription, int rate, LocalDate reviewDate) { }

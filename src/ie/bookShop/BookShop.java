@@ -2,16 +2,19 @@ package ie.bookShop;
 
 import ie.bookShop.bean.*;
 import ie.bookShop.enums.Gender;
-import ie.bookShop.service.BookServiceImpl;
-import ie.bookShop.service.CustomerServiceImpl;
+import ie.bookShop.service.*;
+import ie.bookShop.utils.BookUtils;
+import ie.bookShop.utils.Constants;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 public class BookShop {
 
-    private static final CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
-    private static final BookServiceImpl bookServiceImpl = new BookServiceImpl();
+    private static final CustomerService customerService = new CustomerServiceImpl();
+    private static final BookService bookService = new BookServiceImpl();
+    private static final OrderService orderService = new OrderServiceImpl();
+    private static final OrderItemService orderItemService = new OrderItemServiceImpl();
     private static final Scanner scanner = new Scanner(System.in);
     public static final String CHOICE = "choice";
     public static final String NAME = "name";
@@ -25,7 +28,7 @@ public class BookShop {
     }
 
     private static void createBookList() {
-        bookServiceImpl.createBook();
+        bookService.createBook();
     }
 
     private static  List<String> customerInformation(){
@@ -46,36 +49,25 @@ public class BookShop {
 
         System.out.println();//skip line
 
-        List<Book> bookBasket = bookServiceImpl.bookBasket();
+        List<Book> bookBasket = bookService.bookBasket();
         System.out.println("Book Number ----- Book Name ------------------------------------------------------------------ Book Price ------Book Type");
         bookBasket.forEach(book -> {
 
             String bookType= book instanceof PhysicalBook ? "Paper Book" : "EBook";
-            System.out.printf("%-17s %-76s %-15s  %-1s %n", book.getBookId(), book.getTitle(), book.getPrice(), bookType);
+            System.out.printf("%-17s %-76s %-15s %-1s %n", book.getBookId(), book.getTitle(), book.getPrice(), bookType);
 
         } );
         System.out.println();
 
     }
 
-    //return the book's price based on type of object book
-    private static BigDecimal getBookPrice(Book book) {
-        if(book instanceof EBook){
-             return ((EBook) book).getPrice();
-        }else {
-           return ((PhysicalBook) book).getPrice();
-        }
-    }
-
     //handles the interaction with the user regards the books
     private static void customerAction(String action){
         String answer = "";
-        List<Book> bookBasket = new ArrayList<>();
         List<OrderItem> orderItemList = new ArrayList<>();
         while(!answer.equals("exit")){
 
             answer = getUserInput(customerInteraction(action));
-
 
             if (!answer.equals("exit")) {
                 try {
@@ -83,37 +75,100 @@ public class BookShop {
                     int bookId = Integer.parseInt(answer);
 
                     // Fetches the book by its id
-                    Book book = bookServiceImpl.getBook(bookId);
-                   // OrderItem orderItem = new OrderItem(OrderItem.getItemId(), book.getBookId(), quantity, book.get)
+                    Book book = bookService.getBook(bookId);
                     if(null == book){
-                        throw new RuntimeException();
+                        throw new IllegalArgumentException("There is no book number: "+ bookId + " Choose of from the list!");
                     }
 
-                    // add book to the book basket
-                    bookBasket.add(book);
+                    OrderItem orderItem = new OrderItem(BookUtils.getNextId(), book.getBookId(), quantity, book.getPrice());
+
+                    orderItemService.createOrderItem(orderItem);
+                    orderItemList.add(orderItem);
                     System.out.println("That's an awesome choice: " + book.getTitle() + " by: " + book.getAuthor());
-                } catch (Exception e) {
-                    System.out.println("Invalid input. Please enter a book ID (number) or type exit to finish.");
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input: Please enter a valid number for Book ID and Quantity.");
+                 }  catch (IllegalArgumentException e) {
+                    System.out.println("Invalid input: "+ e.getMessage());
                 }
             }
         }
-        String bookOrBooks = bookBasket.size() > 1 ? " books!" : " book!";
-        System.out.println("You have chosen "+bookBasket.size() + bookOrBooks);
+        String bookOrBooks = orderItemList.size() > 1 ? " books!" : " book!";
+        System.out.println("You have chosen "+orderItemList.size() + bookOrBooks);
 
-        handleOrderOrEndInteraction(bookBasket);
+        handleOrderOrEndInteraction(orderItemList);
     }
 
-    private static void handleOrderOrEndInteraction(List<Book> bookBasket) {
-        if(bookBasket.isEmpty()){
+    private static void handleOrderOrEndInteraction(List<OrderItem> orderItemList) {
+        if(orderItemList.isEmpty()){
             System.out.println("It's a pity you didn't find anything you liked");
         }else{
-            Map<String, String> customerMap = new HashMap<>();
-            Customer customer =  new Customer();
-            for(String customerDetail : customerInformation()){
-                String userInput = getUserInput("Type your => "+ customerDetail +" ");
-                customerMap.put(customerDetail, userInput);
+         //   orderItemService.
+            Customer customer =  createCustomerFromCustomerInput();
+
+            var order = new Order();
+            order.setOrderId(BookUtils.getNextId());
+            order.setCustomerId(customer.getCustomerId());
+            order.setOrderDate(LocalDate.now().toString());
+            order.setOrderStatus(Constants.PROCESSING);
+            order.setOrderItemList(orderItemList);
+            order.setTotalPrice(order.getTotalPrice());
+
+            orderService.save(order);
+
+            createOrderSummary(order);
+
+        }
+    }
+
+    private static void createOrderSummary(Order order) {
+        System.out.println();
+        System.out.println("=================== ORDER SUMMARY ===================");
+        Customer customer = customerService.getCustomer(order.getCustomerId());
+        System.out.println("Customer: "+customer.getFirstName() + ' '+ customer.getLastName());
+        System.out.println("Books Quantity: "+ order.getOrderItemList().size());
+        System.out.println("Order Status: "+order.getOrderStatus());
+        System.out.println("Order Date: "+order.getOrderDate());
+        System.out.println("Total Amount: "+order.getTotalPrice());
+
+        System.out.println();
+        String userChoice = "To Finish Your Order TYPE: 1 \nTo Add New Item TYPE: 2 \nTo Exit TYPE: 3 \nChoice: ";
+
+        customerChoice( getUserInput(userChoice));
+
+
+    }
+
+    private static void customerChoice(String choice) {
+        int userChoice = Integer.parseInt(choice);
+        switch (userChoice){
+            case 1:
+                return;
+            case 2:
+                return;
+            case 3:
+                return;
+        }
+
+    }
+
+    private static Customer createCustomerFromCustomerInput() {
+        Map<String, String> customerMap = new HashMap<>();
+        Customer customer = null;
+        System.out.println();
+        for(String customerDetail : customerInformation()){
+            String userInput = getUserInput("Type your => "+ customerDetail +" ");
+            customer = customerService.getCustomer(userInput);
+            if(null != customer){
+                System.out.println("Customer Already on the System! ");
+                break;
             }
+            customerMap.put(customerDetail, userInput);
+        }
+        if(null == customer){
+            customer = new Customer();
             //populates the customer object
+            customer.setCustomerId(BookUtils.getNextId());
             customer.setFirstName(customerMap.get("First Name"));
             customer.setLastName(customerMap.get("Last Name"));
             customer.setEmail(customerMap.get("Email"));
@@ -121,8 +176,10 @@ public class BookShop {
             customer.setPhoneNumber(customerMap.get("Phone Number"));
             customer.setGender(Gender.getGender(customerMap.get("Gender")));
 
-            //createOrder();
+            customerService.createCustomer(customer);
         }
+
+        return customer;
     }
 
     //this method asks the customer what they would like to.

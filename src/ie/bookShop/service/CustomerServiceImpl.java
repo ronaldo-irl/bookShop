@@ -16,21 +16,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void createCustomer() {
-        Customer customer1 = new Customer(BookUtils.getNextId(), "Ronaldo", "Martins", "ronaldo@tus.ie", "Belgard Heights", "089222999", Gender.MALE);
-        Customer customer2 = new Customer(BookUtils.getNextId(), "Joe", "Bloggs", "joebloggs@tus.ie", "Athlone Main Road", "0832020909", Gender.MALE);
-        Customer customer3 = new Customer(BookUtils.getNextId(), "Jane", "Doe", "jane@tus.ie", "Dublin city", "089222999", Gender.FEMALE);
+        var customer1 = new Customer(BookUtils.getNextId(), "Joe", "Bloggs", "joebloggs@tus.ie", "Athlone Main Road", "0832020909", Gender.MALE);
+        var customer2 = new Customer(BookUtils.getNextId(), "Jane", "Doe", "jane@tus.ie", "Dublin city", "089222999", Gender.FEMALE);
 
         this.customers.add(customer1);
         this.customers.add(customer2);
-        this.customers.add(customer3);
     }
 
     @Override
     public void createCustomer(Customer customer) {
-        //make the default customers are created if customers list is empty
-        if(this.customers.isEmpty()){
-            this.createCustomer();
-        }
         //make sure a duplicated customer is not added to customers list
         List<Customer> allCustomers = new ArrayList<>(this.customers);
         if (allCustomers.stream().noneMatch(c -> c.equals(customer))) {
@@ -41,14 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> getAllCustomers() {
-
-        //return all customers
         return customers;
     }
 
     @Override
     public Customer getCustomer(String name) {
-        //search for a customer by name independent of case
+        //search for a customer by name
         if(null != name && !name.isBlank()){
            return this.getAllCustomers()
                                         .stream()
@@ -74,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer updateCustomer(Customer customer) {
         //Check if the Customer exists and then updates it
         if(null != customer && null != customer.getCustomerId()){
-            Customer updatedCustomer = this.getCustomer(customer.getCustomerId());
+            var updatedCustomer = this.getCustomer(customer.getCustomerId());
 
             updatedCustomer.setCustomerId(customer.getCustomerId());
             updatedCustomer.setAddress(customer.getAddress());
