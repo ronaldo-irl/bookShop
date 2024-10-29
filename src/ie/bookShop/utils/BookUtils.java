@@ -13,7 +13,7 @@ public final class BookUtils {
     }
 
     //format date from format (yyyy-MM-dd) to (dd/MM/yyyy)
-    //and handles in case a wrong format is typped in
+    //and handles in case a wrong format is typed in
     public static String formatDate(String dateToFormat){
 
         try{
@@ -27,7 +27,6 @@ public final class BookUtils {
         }catch (DateTimeParseException e){
             System.out.println("Invalid date: "+dateToFormat);
         }
-
         return null;
     }
 }

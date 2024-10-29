@@ -107,7 +107,7 @@ public class BookShop {
             Customer customer =  createCustomerFromCustomerInput();
 
             var order = new Order();
-            order.setOrderId(BookUtils.getNextId());
+            order.setOrderId(OrderService.generateOrderId());
             order.setCustomerId(customer.getCustomerId());
             order.setOrderDate(LocalDate.now().toString());
             order.setOrderStatus(Constants.PROCESSING);
@@ -125,6 +125,7 @@ public class BookShop {
         System.out.println();
         System.out.println("=================== ORDER SUMMARY ===================");
         Customer customer = customerService.getCustomer(order.getCustomerId());
+        System.out.println("Order ID: "+order.getOrderId());
         System.out.println("Customer: "+customer.getFirstName() + ' '+ customer.getLastName());
         System.out.println("Books Quantity: "+ order.getOrderItemList().size());
         System.out.println("Order Status: "+order.getOrderStatus());
@@ -176,6 +177,12 @@ public class BookShop {
             customer.setPhoneNumber(customerMap.get("Phone Number"));
             customer.setGender(Gender.getGender(customerMap.get("Gender")));
 
+            if(!customerService.isValidEmailFormat(customer.getEmail())){
+                System.out.println();
+                System.out.println("Invalid Email: " + customer.getEmail());
+                String email = getUserInput("Type your email again => ");
+                customer.setEmail(email);
+            }
             customerService.createCustomer(customer);
         }
 

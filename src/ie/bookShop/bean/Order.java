@@ -25,15 +25,6 @@ public class Order {
         this.orderItemList = orderItemList;
     }
 
- /*   public String getFormattedDate() {
-        try {
-            return BookUtils.formatDate(orderDate);
-        } catch (ParseException e) {
-            System.out.println("Invalid date!");
-        }
-        return null;
-    }*/
-
     public Integer getOrderId() {
         return orderId;
     }

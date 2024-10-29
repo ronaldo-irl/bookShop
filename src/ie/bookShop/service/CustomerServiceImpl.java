@@ -87,7 +87,5 @@ public class CustomerServiceImpl implements CustomerService {
                 .filter(c -> !c.getCustomerId().equals(customerId))
                 .collect(Collectors.toList());
         this.customers = removeItemFromList;
-
-
     }
 }
