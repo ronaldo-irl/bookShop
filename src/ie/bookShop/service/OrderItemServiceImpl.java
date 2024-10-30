@@ -20,7 +20,7 @@ public class OrderItemServiceImpl implements OrderItemService{
 
     @Override
     public List<OrderItem> getAllOrderItems() {
-        return null;
+        return this.orderItemList;
     }
 
     @Override

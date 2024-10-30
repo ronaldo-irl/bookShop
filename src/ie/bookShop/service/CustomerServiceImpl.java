@@ -18,11 +18,17 @@ public class CustomerServiceImpl implements CustomerService {
     public void createCustomer() {
         var customer1 = new Customer(BookUtils.getNextId(), "Joe", "Bloggs", "joebloggs@tus.ie", "Athlone Main Road", "0832020909", Gender.MALE);
         var customer2 = new Customer(BookUtils.getNextId(), "Jane", "Doe", "jane@tus.ie", "Dublin city", "089222999", Gender.FEMALE);
+        this.addCustomerToList(customer1,customer2);
 
-        this.customers.add(customer1);
-        this.customers.add(customer2);
     }
 
+    @Override
+    public void addCustomerToList(Customer... customers){
+        for (Customer newCustomer: customers) {
+            this.customers.add(newCustomer);
+        }
+
+    }
     @Override
     public void createCustomer(Customer customer) {
         //make sure a duplicated customer is not added to customers list

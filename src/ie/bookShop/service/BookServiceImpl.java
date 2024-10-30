@@ -62,11 +62,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBook(Integer bookId) {
-        Book bookRequested =  this.bookList.stream().filter(book -> book.getBookId().equals(bookId))
+        return  this.bookList.stream().filter(book -> book.getBookId().equals(bookId))
                                 .findFirst()
                                 .orElse(null);
-
-        return returnBookType(bookRequested);
     }
 
     @Override
@@ -78,16 +76,5 @@ public class BookServiceImpl implements BookService {
     public List<Book> bookBasket(String name) {
         return this.bookList.stream().filter(book -> book.getTitle().equalsIgnoreCase(name))
                 .collect(Collectors.toList());
-    }
-
-
-    private Book returnBookType(Book  retrievedBook){
-        if (retrievedBook instanceof EBook) {
-            return (EBook) retrievedBook;
-        } else if (retrievedBook instanceof PhysicalBook) {
-           return (PhysicalBook) retrievedBook;
-        } else {
-           return null;
-        }
     }
 }

@@ -30,4 +30,6 @@ public interface CustomerService {
 
     void delete(Integer customerId);
 
+    void addCustomerToList(Customer... customers);
+
 }

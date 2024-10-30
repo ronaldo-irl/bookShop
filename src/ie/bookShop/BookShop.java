@@ -20,19 +20,19 @@ public class BookShop {
     public static final String NAME = "name";
 
     public static void main(String[] args) {
-       // createCustomer();
+        createDefaultCustomer();
         createBookList();
         customerWelcome();
         customerAction(CHOICE);
         scanner.close();
     }
 
-    private static void createBookList() {
-        bookService.createBook();
+    private static void createDefaultCustomer() {
+        customerService.createCustomer();
     }
 
-    private static  List<String> customerInformation(){
-       return List.of("First Name", "Last Name", "Email","Address","Phone Number", "Gender");
+    private static void createBookList() {
+        bookService.createBook();
     }
 
     private static String getUserInput(String action ){
@@ -136,19 +136,19 @@ public class BookShop {
         System.out.println();
         String userChoice = "To Finish Your Order TYPE: 1 \nTo Cancel and Exit TYPE: 2 \nChoice: ";
 
-        customerChoice( getUserInput(userChoice), order);
-
-    }
-
-    private static void customerChoice(String choice, Order order) {
-        int userChoice = Integer.parseInt(choice);
-        switch (userChoice){
-            case 1:
+        try{
+            String input = getUserInput(userChoice);
+            if(Integer.valueOf(input) == 1){
                 finishOrderAndGetFeedBack(order);
-            case 2:
+                System.out.println();
                 sayGoodBey();
-            default:
-                System.out.println("Try again!!");
+            }else{
+                sayGoodBey();
+            }
+        }catch (NumberFormatException nfe){
+            System.out.println("Invalid INPUT!!");
+            System.out.println();
+            createOrderSummary(order);
         }
     }
 
@@ -165,7 +165,7 @@ public class BookShop {
         var booksOrBook = order.getOrderItemList().size() == 0 ? "Book: " : "Books: ";
 
         System.out.println();
-        System.out.println("=================== ORDER SUMMARY ===================");
+        System.out.println("=================== ORDER PROCESSED ===================");
 
         System.out.println("Order ID: "+order.getOrderId());
         System.out.println("Customer: "+customer.getFirstName() + ' '+ customer.getLastName());
@@ -175,7 +175,7 @@ public class BookShop {
         System.out.println("Order Status: "+order.getOrderStatus());
         System.out.println("Order Date: "+order.getOrderDate());
         System.out.println("Total Amount: "+order.getTotalPrice());
-
+        System.out.println();
         getUserRate(order);
     }
 
@@ -186,15 +186,15 @@ public class BookShop {
         var customerReview = new CustomerExperience(order.getCustomerId(),reviewDescription, LocalDate.now());
         order.setCustomerExperience(customerReview);
         orderService.save(order);
-
-        sayGoodBey();
     }
 
     private static Customer createCustomerFromCustomerInput() {
         Map<String, String> customerMap = new HashMap<>();
         Customer customer = null;
         System.out.println();
-        for(String customerDetail : customerInformation()){
+        String[] customerInformation = new String[]{"First Name", "Last Name", "Email", "Address", "Phone Number", "Gender"};
+
+        for(String customerDetail : customerInformation){
             String userInput = getUserInput("Type your => "+ customerDetail +" ");
             customer = customerService.getCustomer(userInput);
             if(null != customer){
