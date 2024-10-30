@@ -13,16 +13,18 @@ public class Order {
     private String  orderStatus;
     private BigDecimal totalPrice;
 
+    private CustomerExperience customerExperience;
     private List<OrderItem> orderItemList;
 
     public Order(){}
     public Order(Integer orderId, Integer customerId, String orderDate, String orderStatus,
-                 List<OrderItem> orderItemList, BigDecimal totalPrice) {
+                 List<OrderItem> orderItemList, BigDecimal totalPrice, CustomerExperience customerExperience) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.totalPrice = totalPrice;
+        this.customerExperience = customerExperience;
         this.orderItemList = new ArrayList<>();
 
         //protect against items being modified
@@ -83,7 +85,14 @@ public class Order {
         this.orderItemList = orderItemList;
     }
 
-    // Determines whether two objects are equal or not based on content they hold.
+    public CustomerExperience getCustomerExperience() {
+        return customerExperience;
+    }
+
+    public void setCustomerExperience(CustomerExperience customerExperience) {
+        this.customerExperience = customerExperience;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,10 +107,11 @@ public class Order {
             return false;
         if (getTotalPrice() != null ? !getTotalPrice().equals(order.getTotalPrice()) : order.getTotalPrice() != null)
             return false;
+        if (getCustomerExperience() != null ? !getCustomerExperience().equals(order.getCustomerExperience()) : order.getCustomerExperience() != null)
+            return false;
         return getOrderItemList() != null ? getOrderItemList().equals(order.getOrderItemList()) : order.getOrderItemList() == null;
     }
 
-    //Generates a hash code  for an object.
     @Override
     public int hashCode() {
         int result = getOrderId() != null ? getOrderId().hashCode() : 0;
@@ -109,19 +119,20 @@ public class Order {
         result = 31 * result + (getOrderDate() != null ? getOrderDate().hashCode() : 0);
         result = 31 * result + (getOrderStatus() != null ? getOrderStatus().hashCode() : 0);
         result = 31 * result + (getTotalPrice() != null ? getTotalPrice().hashCode() : 0);
+        result = 31 * result + (getCustomerExperience() != null ? getCustomerExperience().hashCode() : 0);
         result = 31 * result + (getOrderItemList() != null ? getOrderItemList().hashCode() : 0);
         return result;
     }
 
-    //Provides the result of printing the object in human-readable way, not a memory address
     @Override
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
                 ", customerId=" + customerId +
-                ", orderDate=" + orderDate +
+                ", orderDate='" + orderDate + '\'' +
                 ", orderStatus='" + orderStatus + '\'' +
                 ", totalPrice=" + totalPrice +
+                ", customerExperience=" + customerExperience +
                 ", orderItemList=" + orderItemList +
                 '}';
     }

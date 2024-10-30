@@ -13,10 +13,7 @@ import java.util.stream.Collectors;
 
 public class BookServiceImpl implements BookService {
 
-    private List<Book> bookList;
-    public BookServiceImpl(){
-        this.bookList =  new ArrayList<>();;
-    }
+    private List<Book> bookList = new ArrayList<>();
 
     @Override
     public void createBook() {

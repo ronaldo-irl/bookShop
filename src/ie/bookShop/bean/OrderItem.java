@@ -1,24 +1,25 @@
 package ie.bookShop.bean;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class OrderItem {
 
     private Integer itemId;
-    private Integer bookId;
+    private Book book;
     private int quantity;
     private BigDecimal unitPrice;
 
-    public OrderItem(Integer itemId, Integer bookId, int quantity, BigDecimal unitPrice) {
+    public OrderItem(Integer itemId, Book book, int quantity, BigDecimal unitPrice) {
         this.itemId = itemId;
-        this.bookId = bookId;
+        this.book = book;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
 
     public OrderItem(OrderItem item) {
         this.itemId = item.itemId;
-        this.bookId = item.bookId;
+        this.book = item.book;
         this.quantity = item.quantity;
         this.unitPrice = item.unitPrice;
     }
@@ -31,12 +32,12 @@ public class OrderItem {
         this.itemId = itemId;
     }
 
-    public Integer getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setBook(Book bookId) {
+        this.book = book;
     }
 
     public int getQuantity() {
@@ -63,15 +64,14 @@ public class OrderItem {
         if (getQuantity() != orderItem.getQuantity()) return false;
         if (getItemId() != null ? !getItemId().equals(orderItem.getItemId()) : orderItem.getItemId() != null)
             return false;
-        if (getBookId() != null ? !getBookId().equals(orderItem.getBookId()) : orderItem.getBookId() != null)
-            return false;
+        if (getBook() != null ? !getBook().equals(orderItem.getBook()) : orderItem.getBook() != null) return false;
         return getUnitPrice() != null ? getUnitPrice().equals(orderItem.getUnitPrice()) : orderItem.getUnitPrice() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getItemId() != null ? getItemId().hashCode() : 0;
-        result = 31 * result + (getBookId() != null ? getBookId().hashCode() : 0);
+        result = 31 * result + (getBook() != null ? getBook().hashCode() : 0);
         result = 31 * result + getQuantity();
         result = 31 * result + (getUnitPrice() != null ? getUnitPrice().hashCode() : 0);
         return result;
@@ -80,8 +80,8 @@ public class OrderItem {
     @Override
     public String toString() {
         return "OrderItem{" +
-                "orderId=" + itemId +
-                ", bookId=" + bookId +
+                "itemId=" + itemId +
+                ", book=" + book +
                 ", quantity=" + quantity +
                 ", unitPrice=" + unitPrice +
                 '}';

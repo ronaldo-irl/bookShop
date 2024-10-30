@@ -20,7 +20,7 @@ public class BookShop {
     public static final String NAME = "name";
 
     public static void main(String[] args) {
-        //createCustomer();
+       // createCustomer();
         createBookList();
         customerWelcome();
         customerAction(CHOICE);
@@ -47,8 +47,13 @@ public class BookShop {
         System.out.println();
         System.out.println( "It's great having you here!! \nExplore our Book Collection Below and Choose Your Favorites");
 
-        System.out.println();//skip line
+        System.out.println();
 
+        printBookBasket();
+
+    }
+
+    private static void printBookBasket() {
         List<Book> bookBasket = bookService.bookBasket();
         System.out.println("Book Number ----- Book Name ------------------------------------------------------------------ Book Price ------Book Type");
         bookBasket.forEach(book -> {
@@ -58,7 +63,6 @@ public class BookShop {
 
         } );
         System.out.println();
-
     }
 
     //handles the interaction with the user regards the books
@@ -80,7 +84,7 @@ public class BookShop {
                         throw new IllegalArgumentException("There is no book number: "+ bookId + " Choose of from the list!");
                     }
 
-                    OrderItem orderItem = new OrderItem(BookUtils.getNextId(), book.getBookId(), quantity, book.getPrice());
+                    OrderItem orderItem = new OrderItem(BookUtils.getNextId(), book, quantity, book.getPrice());
 
                     orderItemService.createOrderItem(orderItem);
                     orderItemList.add(orderItem);
@@ -114,16 +118,13 @@ public class BookShop {
             order.setOrderItemList(orderItemList);
             order.setTotalPrice(order.getTotalPrice());
 
-            orderService.save(order);
-
             createOrderSummary(order);
-
         }
     }
 
     private static void createOrderSummary(Order order) {
         System.out.println();
-        System.out.println("=================== ORDER SUMMARY ===================");
+        System.out.println("=================== ORDER PREVIEW SUMMARY ===================");
         Customer customer = customerService.getCustomer(order.getCustomerId());
         System.out.println("Order ID: "+order.getOrderId());
         System.out.println("Customer: "+customer.getFirstName() + ' '+ customer.getLastName());
@@ -133,22 +134,60 @@ public class BookShop {
         System.out.println("Total Amount: "+order.getTotalPrice());
 
         System.out.println();
-        String userChoice = "To Finish Your Order TYPE: 1 \nTo Add New Item TYPE: 2 \nTo Exit TYPE: 3 \nChoice: ";
+        String userChoice = "To Finish Your Order TYPE: 1 \nTo Cancel and Exit TYPE: 2 \nChoice: ";
 
-        customerChoice( getUserInput(userChoice));
+        customerChoice( getUserInput(userChoice), order);
 
     }
 
-    private static void customerChoice(String choice) {
+    private static void customerChoice(String choice, Order order) {
         int userChoice = Integer.parseInt(choice);
         switch (userChoice){
             case 1:
-                return;
+                finishOrderAndGetFeedBack(order);
             case 2:
-                return;
-            case 3:
-                return;
+                sayGoodBey();
+            default:
+                System.out.println("Try again!!");
         }
+    }
+
+    private static void sayGoodBey() {
+        System.out.println("Thank you for Shopping with US!!");
+    }
+
+    private static void finishOrderAndGetFeedBack(Order order) {
+
+        order.setOrderStatus(Constants.FINISHED);
+
+        var customer = customerService.getCustomer(order.getCustomerId());
+
+        var booksOrBook = order.getOrderItemList().size() == 0 ? "Book: " : "Books: ";
+
+        System.out.println();
+        System.out.println("=================== ORDER SUMMARY ===================");
+
+        System.out.println("Order ID: "+order.getOrderId());
+        System.out.println("Customer: "+customer.getFirstName() + ' '+ customer.getLastName());
+        System.out.println("Shipping Address: "+ customer.getAddress());
+        System.out.println(booksOrBook + order.getOrderItemList().size());
+        order.getOrderItemList().forEach(book -> System.out.println("Book Title: " + book.getBook().getTitle()));
+        System.out.println("Order Status: "+order.getOrderStatus());
+        System.out.println("Order Date: "+order.getOrderDate());
+        System.out.println("Total Amount: "+order.getTotalPrice());
+
+        getUserRate(order);
+    }
+
+    private static void getUserRate(Order order) {
+        var question = "Please, Take a minute and give us your feedback: ";
+        var reviewDescription = getUserInput(question);
+
+        var customerReview = new CustomerExperience(order.getCustomerId(),reviewDescription, LocalDate.now());
+        order.setCustomerExperience(customerReview);
+        orderService.save(order);
+
+        sayGoodBey();
     }
 
     private static Customer createCustomerFromCustomerInput() {
@@ -195,7 +234,7 @@ public class BookShop {
             case "choice":
                 return "Choose one of the books by typing the Book Number or type exit to finish your purchase: ";
             default:
-                return "Something is not correct!";
+                return "Something is wrong!";
         }
     }
 }
