@@ -6,7 +6,7 @@ public enum Genre {
     MYSTERY,
     SCIENCE_FICTION,
     FANTASY,
-    HORROR,
+    NOVEL,
     ROMANCE,
     BIOGRAPHY,
     HISTORY,

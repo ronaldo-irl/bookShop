@@ -26,11 +26,11 @@ public class BookServiceImpl implements BookService {
 
         Book book4 = new PhysicalBook(BookUtils.getNextId(), "The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "0553382218", 1979, Genre.FICTION, "Del Rey", 224, new BigDecimal("14.99"), "Paperback");
 
-        Book book5 = new PhysicalBook(BookUtils.getNextId(), "Pride and Prejudice", "Jane Austen", "0553353352", 1813, Genre.FICTION, "Penguin Classics", 432, new BigDecimal("12.99"), "Hardcover");
+        Book book5 = new PhysicalBook(BookUtils.getNextId(), "Pride and Prejudice", "Jane Austen", "0553353352", 1813, Genre.NOVEL, "Penguin Classics", 432, new BigDecimal("12.99"), "Hardcover");
 
-        Book book6 = new EBook(BookUtils.getNextId(), "The Lord of the Rings: The Fellowship of the Ring", "J. R. R. Tolkien", "0395489000", 1954, Genre.FICTION, "Allen & Unwin", 423, new BigDecimal("19.99"), "PDF", "http://tuslibrary.ie");
+        Book book6 = new EBook(BookUtils.getNextId(), "The Lord of the Rings: The Fellowship of the Ring", "J. R. R. Tolkien", "0395489000", 1954, Genre.FANTASY, "Allen & Unwin", 423, new BigDecimal("19.99"), "PDF", "http://tuslibrary.ie");
 
-        Book book7 = new EBook(BookUtils.getNextId(), "Sapiens: A Brief History of Humankind", "Yuval Noah Harari", "0060889224", 2011, Genre.NON_FICTION, "Vintage Books", 448, new BigDecimal("24.99"), "PDF", "http://tuslibrary.ie");
+        Book book7 = new EBook(BookUtils.getNextId(), "Sapiens: A Brief History of Humankind", "Yuval Noah Harari", "0060889224", 2011, Genre.HISTORY, "Vintage Books", 448, new BigDecimal("24.99"), "PDF", "http://tuslibrary.ie");
 
         Book book8 = new EBook(BookUtils.getNextId(), "The Art of Computer Programming, Volume 1: Fundamental Algorithms", "Donald Knuth", "0201896834", 1968, Genre.SOFTWARE_DEVELOPMENT, "Addison-Wesley", 657, new BigDecimal("59.99"), "EPUB", "http://tuslibrary.ie");
 
