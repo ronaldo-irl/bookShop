@@ -10,10 +10,7 @@ public interface CustomerService {
         return email != null && email.contains("@") && email.contains(".");
     }
     default boolean isValidEmailFormat(String email) {
-        if (!isValidEmail(email)) {
-            return false;
-        }
-        return true;
+        return this.isValidEmail(email);
     }
 
     void createCustomer();

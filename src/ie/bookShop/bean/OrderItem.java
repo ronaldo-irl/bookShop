@@ -1,7 +1,6 @@
 package ie.bookShop.bean;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 public class OrderItem {
 
