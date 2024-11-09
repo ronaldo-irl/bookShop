@@ -141,9 +141,9 @@ public class BookShop {
             if(Integer.valueOf(input) == 1){
                 finishOrderAndGetFeedBack(order);
                 System.out.println();
-                sayGoodBey();
+                sayGoodBye(null);
             }else{
-                sayGoodBey();
+                sayGoodBye("It's a pity you didn't find anything you liked");
             }
         }catch (NumberFormatException nfe){
             System.out.println("Invalid INPUT!!");
@@ -152,8 +152,12 @@ public class BookShop {
         }
     }
 
-    private static void sayGoodBey() {
-        System.out.println("Thank you for Shopping with US!!");
+    private static void sayGoodBye(String message) {
+        if(null != message){
+            System.out.println(" It's a pity you didn't find anything you liked");
+        }else{
+            System.out.println("Thank you for Shopping with US!!");
+        }
     }
 
     private static void finishOrderAndGetFeedBack(Order order) {
