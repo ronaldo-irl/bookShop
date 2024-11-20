@@ -66,7 +66,7 @@ public class Order {
         //TotalPrice is calculated by summing up the items the customer chose.
         if(!this.orderItemList.isEmpty()){
             return  this.orderItemList.stream().filter(total -> null != total.getUnitPrice())
-                    .map(OrderItem::getUnitPrice)
+                    .map(total -> total.getUnitPrice().multiply(BigDecimal.valueOf(total.getQuantity())))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         }

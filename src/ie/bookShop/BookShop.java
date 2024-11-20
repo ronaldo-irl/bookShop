@@ -28,27 +28,30 @@ public class BookShop {
     }
 
     private static void createDefaultCustomer() {
+        //create default customers
         customerService.createCustomer();
     }
 
     private static void createBookList() {
+        //creates a list containing the books for the store
         bookService.createBook();
     }
 
     private static String getUserInput(String action ){
+        //shows a message to the customer
         System.out.print(action);
+        //get user's input
         String userInput = scanner.nextLine();
         return userInput;
     }
 
     private static void customerWelcome(){
-
         System.out.println("====================== Welcome to TUS Book Shop =========================");
         System.out.println();
         System.out.println( "It's great having you here!! \nExplore our Book Collection Below and Choose Your Favorites");
 
         System.out.println();
-
+        //call method to print a list of books to the customer
         printBookBasket();
 
     }
@@ -56,16 +59,17 @@ public class BookShop {
     private static void printBookBasket() {
         List<Book> bookBasket = bookService.bookBasket();
         System.out.println("Book Number ----- Book Name ------------------------------------------------------------------ Book Price ------Book Type");
+        //loop through the list of books and print: BookId, Book Title, Book Price and Book Type
         bookBasket.forEach(book -> {
-
-            String bookType= book instanceof PhysicalBook ? "Paper Book" : "EBook";
+            //checks the type of the book object and assigns the result to bookType variable
+            String bookType = book instanceof PhysicalBook ? "Paper Book" : "EBook";
             System.out.printf("%-17s %-76s %-15s %-1s %n", book.getBookId(), book.getTitle(), book.getPrice(), bookType);
-
         } );
+
         System.out.println();
     }
 
-    //handles the interaction with the user regards the books
+    //handles the interaction with the customer regards the books
     private static void customerAction(String action){
         String answer = "";
         List<OrderItem> orderItemList = new ArrayList<>();
@@ -81,6 +85,8 @@ public class BookShop {
                     // Fetches the book by its id
                     Book book = bookService.getBook(bookId);
                     if(null == book){
+                        //if the customers types in a book number that doesn't exit,
+                        // the system shows a custom message to them
                         throw new IllegalArgumentException("There is no book number: "+ bookId + " Choose of from the list!");
                     }
 
@@ -91,25 +97,27 @@ public class BookShop {
                     System.out.println("That's an awesome choice: " + book.getTitle() + " by: " + book.getAuthor());
 
                 } catch (NumberFormatException e) {
+                    //if the user types different value on lines 82, 83, it shows the message below
                     System.out.println("Invalid input: Please enter a valid number for Book ID and Quantity.");
                  }  catch (IllegalArgumentException e) {
+                    //shows the personalized message defined above
                     System.out.println("Invalid input: "+ e.getMessage());
                 }
             }
         }
-        String bookOrBooks = orderItemList.size() > 1 ? " books!" : " book!";
-        System.out.println("You have chosen "+orderItemList.size() + bookOrBooks);
-
+        //call method to handle order details
         handleOrderOrEndInteraction(orderItemList);
     }
 
     private static void handleOrderOrEndInteraction(List<OrderItem> orderItemList) {
         if(orderItemList.isEmpty()){
+            //if the list is empty it means the customer didn't choose any book
             System.out.println("It's a pity you didn't find anything you liked");
         }else{
-         //   orderItemService.
+            //get customer's details
             Customer customer =  createCustomerFromCustomerInput();
 
+            //crate the order and set the values
             var order = new Order();
             order.setOrderId(OrderService.generateOrderId());
             order.setCustomerId(customer.getCustomerId());
@@ -123,12 +131,14 @@ public class BookShop {
     }
 
     private static void createOrderSummary(Order order) {
+        //Display the summary of the order to the customer.
+        int totalQuantity = order.getOrderItemList().stream().mapToInt(q -> q.getQuantity()).sum();
         System.out.println();
         System.out.println("=================== ORDER PREVIEW SUMMARY ===================");
         Customer customer = customerService.getCustomer(order.getCustomerId());
         System.out.println("Order ID: "+order.getOrderId());
         System.out.println("Customer: "+customer.getFirstName() + ' '+ customer.getLastName());
-        System.out.println("Books Quantity: "+ order.getOrderItemList().size());
+        System.out.println("Books Quantity: "+ totalQuantity);
         System.out.println("Order Status: "+order.getOrderStatus());
         System.out.println("Order Date: "+order.getOrderDate());
         System.out.println("Total Amount: "+order.getTotalPrice());
@@ -180,6 +190,7 @@ public class BookShop {
         System.out.println("Order Date: "+order.getOrderDate());
         System.out.println("Total Amount: "+order.getTotalPrice());
         System.out.println();
+
         getUserRate(order);
     }
 
@@ -198,13 +209,14 @@ public class BookShop {
         System.out.println();
         String[] customerInformation = new String[]{"First Name", "Last Name", "Email", "Address", "Phone Number", "Gender"};
 
+        //get customer details
         for(String customerDetail : customerInformation){
             String userInput = getUserInput("Type your => "+ customerDetail +" ");
-            customer = customerService.getCustomer(userInput);
+/*            customer = customerService.getCustomer(userInput);
             if(null != customer){
                 System.out.println("Customer Already on the System! ");
                 break;
-            }
+            }*/
             customerMap.put(customerDetail, userInput);
         }
         if(null == customer){
