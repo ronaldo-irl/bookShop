@@ -177,15 +177,12 @@ public class BookShop {
 
         var customer = customerService.getCustomer(order.getCustomerId());
 
-        var booksOrBook = order.getOrderItemList().size() == 0 ? "Book: " : "Books: ";
-
         System.out.println();
         System.out.println("=================== ORDER PROCESSED ===================");
 
         System.out.println("Order ID: "+order.getOrderId());
         System.out.println("Customer: "+customer.getFirstName() + ' '+ customer.getLastName());
         System.out.println("Shipping Address: "+ customer.getAddress());
-        System.out.println(booksOrBook + order.getOrderItemList().size());
         order.getOrderItemList().forEach(book -> System.out.println("Book Title: " + book.getBook().getTitle()));
         System.out.println("Order Status: "+order.getOrderStatus());
         System.out.println("Order Date: "+order.getOrderDate());
@@ -196,8 +193,7 @@ public class BookShop {
     }
 
     private static void getUserRate(Order order) {
-        var question = "Please, Take a minute and give us your feedback: ";
-        var reviewDescription = getUserInput(question);
+        var reviewDescription = getUserInput(customerInteraction("feedback"));
 
         var customerReview = new CustomerExperience(order.getCustomerId(),reviewDescription, LocalDate.now());
         order.setCustomerExperience(customerReview);
@@ -246,8 +242,8 @@ public class BookShop {
     //this method asks the customer what they would like to.
     private static String customerInteraction(String action) {
         switch (action.toLowerCase()) {
-            case "name":
-                return "What is your name? ";
+            case "feedback":
+                return "Please, Take a minute and give us your feedback: ";
             case "choice":
                 return "Choose one of the books by typing the Book Number or type q to finish your interaction: ";
             default:

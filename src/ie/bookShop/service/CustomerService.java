@@ -25,8 +25,6 @@ public interface CustomerService {
 
     Customer updateCustomer(Customer customer);
 
-    void delete(Integer customerId);
-
     void addCustomerToList(Customer... customers);
 
 }

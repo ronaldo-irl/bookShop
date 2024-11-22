@@ -17,8 +17,4 @@ public interface OrderService {
 
     Order updateOrder(Order order);
 
-    List<Order> getAllOrders();
-
-    void delete(Integer orderId);
-
 }

@@ -85,13 +85,4 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return null;
     }
-
-    @Override
-    public void delete(Integer customerId) {
-        //creates a new list removing the given id and assign the new list to the old one
-        List<Customer> removeItemFromList = this.customers.stream()
-                .filter(c -> !c.getCustomerId().equals(customerId))
-                .collect(Collectors.toList());
-        this.customers = removeItemFromList;
-    }
 }

@@ -22,19 +22,4 @@ public class OrderItemServiceImpl implements OrderItemService{
     public List<OrderItem> getAllOrderItems() {
         return this.orderItemList;
     }
-
-    @Override
-    public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
-        return null;
-    }
-
-    @Override
-    public OrderItem updateOrderItem(OrderItem orderItem) {
-        return null;
-    }
-
-    @Override
-    public void deleteOrderItem(Long id) {
-
-    }
 }

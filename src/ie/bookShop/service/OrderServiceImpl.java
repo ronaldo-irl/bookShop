@@ -24,15 +24,4 @@ public class OrderServiceImpl implements OrderService {
     public Order updateOrder(Order order) {
         return order;
     }
-
-    @Override
-    public List<Order> getAllOrders() {
-        return this.orderList;
-    }
-
-    @Override
-    public void delete(Integer orderId) {
-        List<Order>  filteredOrderList = this.orderList.stream().filter(o -> !o.getOrderId().equals(orderId)).collect(Collectors.toList());
-        this.orderList = filteredOrderList;
-    }
 }
