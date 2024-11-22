@@ -17,11 +17,12 @@ public class BookShop {
     private static final OrderItemService orderItemService = new OrderItemServiceImpl();
     private static final Scanner scanner = new Scanner(System.in);
     public static final String CHOICE = "choice";
-    public static final String NAME = "name";
+
+
 
     public static void main(String[] args) {
-        createDefaultCustomer();
         createBookList();
+        createDefaultCustomer();
         customerWelcome();
         customerAction(CHOICE);
         scanner.close();
@@ -73,11 +74,11 @@ public class BookShop {
     private static void customerAction(String action){
         String answer = "";
         List<OrderItem> orderItemList = new ArrayList<>();
-        while(!answer.equals("exit")){
+        while(!answer.equals("q")){
 
             answer = getUserInput(customerInteraction(action));
 
-            if (!answer.equals("exit")) {
+            if (!answer.equals("q")) {
                 try {
                     int quantity = Integer.parseInt(getUserInput("Quantity: "));
                     int bookId = Integer.parseInt(answer);
@@ -212,11 +213,11 @@ public class BookShop {
         //get customer details
         for(String customerDetail : customerInformation){
             String userInput = getUserInput("Type your => "+ customerDetail +" ");
-/*            customer = customerService.getCustomer(userInput);
+            customer = customerService.getCustomer(userInput);
             if(null != customer){
                 System.out.println("Customer Already on the System! ");
                 break;
-            }*/
+            }
             customerMap.put(customerDetail, userInput);
         }
         if(null == customer){
@@ -248,7 +249,7 @@ public class BookShop {
             case "name":
                 return "What is your name? ";
             case "choice":
-                return "Choose one of the books by typing the Book Number or type exit to finish your purchase: ";
+                return "Choose one of the books by typing the Book Number or type q to finish your interaction: ";
             default:
                 return "Something is wrong!";
         }
