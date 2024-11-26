@@ -11,16 +11,12 @@ import java.util.*;
 
 public class BookShop {
 
-    private static final CustomerService customerService = new CustomerServiceImpl();
-    private static final BookService bookService = new BookServiceImpl();
-    private static final OrderService orderService = new OrderServiceImpl();
-    private static final OrderItemService orderItemService = new OrderItemServiceImpl();
-    private static final Scanner scanner = new Scanner(System.in);
-    public static final String CHOICE = "choice";
+
 
 
 
     public static void main(String[] args) {
+        init();
         createBookList();
         createDefaultCustomer();
         customerWelcome();
@@ -28,6 +24,13 @@ public class BookShop {
         scanner.close();
     }
 
+    private static void init(){}
+        static  CustomerService customerService = new CustomerServiceImpl();
+        static  BookService bookService = new BookServiceImpl();
+        static  OrderService orderService = new OrderServiceImpl();
+        static  OrderItemService orderItemService = new OrderItemServiceImpl();
+        static  Scanner scanner = new Scanner(System.in);
+        static  String CHOICE = "choice";
     private static void createDefaultCustomer() {
         //create default customers
         customerService.createCustomer();
@@ -70,7 +73,7 @@ public class BookShop {
         System.out.println();
     }
 
-    //handles the interaction with the customer regards the books
+    //handles the interaction with the customer
     private static void customerAction(String action){
         String answer = "";
         List<OrderItem> orderItemList = new ArrayList<>();
@@ -120,7 +123,7 @@ public class BookShop {
 
             //crate the order and set the values
             var order = new Order();
-            order.setOrderId(OrderService.generateOrderId());
+            order.setOrderId(BookUtils.getNextId());
             order.setCustomerId(customer.getCustomerId());
             order.setOrderDate(LocalDate.now().toString());
             order.setOrderStatus(Constants.PROCESSING);
@@ -155,6 +158,8 @@ public class BookShop {
                 sayGoodBye(null);
             }else{
                 sayGoodBye("It's a pity you didn't find anything you liked");
+                //remove order
+                orderService.deleteOrder(order);
             }
         }catch (NumberFormatException nfe){
             System.out.println("Invalid INPUT!!");
@@ -183,12 +188,12 @@ public class BookShop {
         System.out.println("Order ID: "+order.getOrderId());
         System.out.println("Customer: "+customer.getFirstName() + ' '+ customer.getLastName());
         System.out.println("Shipping Address: "+ customer.getAddress());
-        order.getOrderItemList().forEach(book -> System.out.println("Book Title: " + book.getBook().getTitle()));
         System.out.println("Order Status: "+order.getOrderStatus());
         System.out.println("Order Date: "+order.getOrderDate());
         System.out.println("Total Amount: "+order.getTotalPrice());
         System.out.println();
-
+        System.out.println("=================== BOOKS ===================");
+        order.getOrderItemList().forEach(book -> System.out.println("Book Title: " + book.getBook().getTitle()));
         getUserRate(order);
     }
 
@@ -197,7 +202,7 @@ public class BookShop {
 
         var customerReview = new CustomerExperience(order.getCustomerId(),reviewDescription, LocalDate.now());
         order.setCustomerExperience(customerReview);
-        orderService.save(order);
+        orderService.saveOrder(order);
     }
 
     private static Customer createCustomerFromCustomerInput() {

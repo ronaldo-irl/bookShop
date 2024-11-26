@@ -4,24 +4,23 @@ import ie.bookShop.bean.Order;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderServiceImpl implements OrderService {
 
     private List<Order> orderList = new ArrayList<>();
 
     @Override
-    public void save(Order order) {
+    public void saveOrder(Order order) {
         this.orderList.add(order);
     }
 
     @Override
-    public Order getOrder(Integer orderId) {
-        return null;
+    public List<Order> getAllOrders() {
+        return this.orderList;
     }
 
     @Override
-    public Order updateOrder(Order order) {
-        return order;
+    public void deleteOrder(Order order) {
+        this.orderList.removeIf(o -> o.equals(order));
     }
 }
