@@ -11,12 +11,16 @@ import java.util.*;
 
 public class BookShop {
 
-
+    private static final CustomerService customerService = new CustomerServiceImpl();
+    private static final BookService bookService = new BookServiceImpl();
+    private static final OrderService orderService = new OrderServiceImpl();
+    private static final OrderItemService orderItemService = new OrderItemServiceImpl();
+    private static final Scanner scanner = new Scanner(System.in);
+    public static final String CHOICE = "choice";
 
 
 
     public static void main(String[] args) {
-        init();
         createBookList();
         createDefaultCustomer();
         customerWelcome();
@@ -24,13 +28,6 @@ public class BookShop {
         scanner.close();
     }
 
-    private static void init(){}
-        static  CustomerService customerService = new CustomerServiceImpl();
-        static  BookService bookService = new BookServiceImpl();
-        static  OrderService orderService = new OrderServiceImpl();
-        static  OrderItemService orderItemService = new OrderItemServiceImpl();
-        static  Scanner scanner = new Scanner(System.in);
-        static  String CHOICE = "choice";
     private static void createDefaultCustomer() {
         //create default customers
         customerService.createCustomer();
