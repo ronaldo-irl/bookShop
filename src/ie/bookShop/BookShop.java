@@ -9,6 +9,8 @@ import ie.bookShop.utils.Constants;
 import java.time.LocalDate;
 import java.util.*;
 
+import static ie.bookShop.service.BookService.formatPrice;
+
 public class BookShop {
 
     private static final CustomerService customerService = new CustomerServiceImpl();
@@ -62,9 +64,7 @@ public class BookShop {
         System.out.println("Book Number ----- Book Name ------------------------------------------------------------------ Book Price ------Book Type");
         //loop through the list of books and print: BookId, Book Title, Book Price and Book Type
         bookBasket.forEach(book -> {
-            //checks the type of the book object and assigns the result to bookType variable
-            String bookType = book instanceof PhysicalBook ? "Paper Book" : "EBook";
-            System.out.printf("%-17s %-76s %-15s %-1s %n", book.getBookId(), book.getTitle(), book.getPrice(), bookType);
+            System.out.printf("%-17s %-76s %-15s %-1s %n", book.getBookId(), book.getTitle(), formatPrice(book.getPrice()), getBookType(book));
         } );
 
         System.out.println();
@@ -143,7 +143,7 @@ public class BookShop {
         System.out.println("Books Quantity: "+ totalQuantity);
         System.out.println("Order Status: "+order.getOrderStatus());
         System.out.println("Order Date: "+order.getOrderDate());
-        System.out.println("Total Amount: "+order.getTotalPrice());
+        System.out.println("Total Amount: "+ formatPrice(order.getTotalPrice()));
 
         System.out.println();
         String userChoice = "To Finish Your Order TYPE: 1 \nTo Cancel and Exit TYPE: 2 \nChoice: ";
@@ -188,10 +188,11 @@ public class BookShop {
         System.out.println("Shipping Address: "+ customer.getAddress());
         System.out.println("Order Status: "+order.getOrderStatus());
         System.out.println("Order Date: "+order.getOrderDate());
-        System.out.println("Total Amount: "+order.getTotalPrice());
+        System.out.println("Total Amount: "+ formatPrice(order.getTotalPrice()));
         System.out.println();
         System.out.println("=================== BOOKS ===================");
         order.getOrderItemList().forEach(book -> System.out.println("Book Title: " + book.getBook().getTitle()));
+        System.out.println();
         getUserRate(order);
     }
 
@@ -259,6 +260,7 @@ public class BookShop {
     }
 
     private static String getBookType(Book book){
+        //book type is return by pattern matching as shown on line 265,266
         String bookType;
         switch (book){
             case PhysicalBook physicalBook -> bookType = "Paper Book";

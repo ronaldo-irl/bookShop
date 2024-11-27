@@ -2,13 +2,15 @@ package ie.bookShop.service;
 
 import ie.bookShop.bean.Book;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface BookService {
 
-    static String formatPrice(double price) {
-        return "$" + String.format("%.2f", price);
+    static String formatPrice(BigDecimal price) {
+        return "€" + String.format("%.2f", price);
     }
+
     void createBook();
 
     Book getBook(String name);
