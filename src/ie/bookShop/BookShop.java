@@ -87,7 +87,7 @@ public class BookShop {
                     Book book = bookService.getBook(bookId);
                     if(null == book){
                         //if the customers types in a book number that doesn't exit,
-                        // the system shows a custom message to them
+                        // the system shows a custom message by throwing this unchecked exception
                         throw new IllegalArgumentException("There is no book number: "+ bookId + " Choose of from the list!");
                     }
 
@@ -97,8 +97,8 @@ public class BookShop {
                     orderItemList.add(orderItem);
                     System.out.println("That's an awesome choice: " + book.getTitle() + " by: " + book.getAuthor());
 
-                } catch (NumberFormatException e) {
-                    //if the user types different value on lines 82, 83, it shows the message below
+                } catch (NumberFormatException e) {//handles the cast on line 83,84
+                    //if the user types different value on lines 83,84, it shows the message below
                     System.out.println("Invalid input: Please enter a valid number for Book ID and Quantity.");
                  }  catch (IllegalArgumentException e) {
                     //shows the personalized message defined above
@@ -119,6 +119,7 @@ public class BookShop {
             Customer customer =  createCustomerFromCustomerInput();
 
             //crate the order and set the values
+            //here the compiler infers  the type of (var order) by the (new Order()) expression
             var order = new Order();
             order.setOrderId(BookUtils.getNextId());
             order.setCustomerId(customer.getCustomerId());
@@ -147,7 +148,7 @@ public class BookShop {
         System.out.println();
         String userChoice = "To Finish Your Order TYPE: 1 \nTo Cancel and Exit TYPE: 2 \nChoice: ";
 
-        try{
+        try{//get input from the user
             String input = getUserInput(userChoice);
             if(Integer.valueOf(input) == 1){
                 finishOrderAndGetFeedBack(order);
@@ -176,7 +177,7 @@ public class BookShop {
     private static void finishOrderAndGetFeedBack(Order order) {
 
         order.setOrderStatus(Constants.FINISHED);
-
+        //fetches customer by customerID
         var customer = customerService.getCustomer(order.getCustomerId());
 
         System.out.println();
@@ -195,10 +196,12 @@ public class BookShop {
     }
 
     private static void getUserRate(Order order) {
+        //get customer feedback
         var reviewDescription = getUserInput(customerInteraction("feedback"));
-
+        //create CustomerExperience experience object
         var customerReview = new CustomerExperience(order.getCustomerId(),reviewDescription, LocalDate.now());
         order.setCustomerExperience(customerReview);
+        //"save the order"
         orderService.saveOrder(order);
     }
 
@@ -206,6 +209,8 @@ public class BookShop {
         Map<String, String> customerMap = new HashMap<>();
         Customer customer = null;
         System.out.println();
+        //this array will be used to get the information from the customer
+        //and store in a map
         String[] customerInformation = new String[]{"First Name", "Last Name", "Email", "Address", "Phone Number", "Gender"};
 
         //get customer details
@@ -251,5 +256,16 @@ public class BookShop {
             default:
                 return "Something is wrong!";
         }
+    }
+
+    private static String getBookType(Book book){
+        String bookType;
+        switch (book){
+            case PhysicalBook physicalBook -> bookType = "Paper Book";
+            case EBook eBook -> bookType = "Ebook";
+            default -> bookType = "Not Found";
+        }
+
+        return bookType;
     }
 }

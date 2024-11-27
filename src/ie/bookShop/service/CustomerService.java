@@ -9,6 +9,9 @@ public interface CustomerService {
     private boolean isValidEmail(String email) {
         return email != null && email.contains("@") && email.contains(".");
     }
+    //check if the email is valid or not.
+    //this default method calls the private above
+    // this is to demonstrate private, default and static interface methods
     default boolean isValidEmailFormat(String email) {
         return this.isValidEmail(email);
     }

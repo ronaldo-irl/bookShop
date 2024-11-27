@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface BookService {
 
+    static String formatPrice(double price) {
+        return "$" + String.format("%.2f", price);
+    }
     void createBook();
 
     Book getBook(String name);
