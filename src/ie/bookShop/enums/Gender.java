@@ -9,7 +9,8 @@ public enum Gender {
         try {
             return Gender.valueOf(genderString.toUpperCase());
         } catch (IllegalArgumentException e) {
-            //In case the user doesn't provide (Male or Female) gender we return NOT_PROVIDED
+            //In case the customer doesn't provide (Male or Female) input
+            //JVM will throw this an unchecked exception. Then we set the Gender to NOT_PROVIDED
             return NOT_PROVIDED;
         }
     }

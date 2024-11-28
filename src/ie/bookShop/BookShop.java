@@ -123,7 +123,7 @@ public class BookShop {
             var order = new Order();
             order.setOrderId(BookUtils.getNextId());
             order.setCustomerId(customer.getCustomerId());
-            order.setOrderDate(LocalDate.now().toString());
+            order.setOrderDate(LocalDate.now());
             order.setOrderStatus(Constants.PROCESSING);
             order.setOrderItemList(orderItemList);
             order.setTotalPrice(order.getTotalPrice());

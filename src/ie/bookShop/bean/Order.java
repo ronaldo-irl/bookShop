@@ -3,13 +3,14 @@ package ie.bookShop.bean;
 import ie.bookShop.utils.BookUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
     private Integer orderId;
     private Integer customerId;
-    private String orderDate;
+    private LocalDate orderDate;
     private String  orderStatus;
     private BigDecimal totalPrice;
 
@@ -17,7 +18,7 @@ public class Order {
     private List<OrderItem> orderItemList;
 
     public Order(){}
-    public Order(Integer orderId, Integer customerId, String orderDate, String orderStatus,
+    public Order(Integer orderId, Integer customerId, LocalDate orderDate, String orderStatus,
                  List<OrderItem> orderItemList, BigDecimal totalPrice, CustomerExperience customerExperience) {
         this.orderId = orderId;
         this.customerId = customerId;
@@ -46,11 +47,11 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public String getOrderDate()  {
-        return BookUtils.formatDate(this.orderDate);
+    public LocalDate getOrderDate()  {
+        return this.orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
