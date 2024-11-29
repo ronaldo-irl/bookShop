@@ -88,7 +88,7 @@ public class BookShop {
                     if(null == book){
                         //if the customers types in a book number that doesn't exit,
                         // the system shows a custom message by throwing this unchecked exception
-                        throw new IllegalArgumentException("There is no book number: "+ bookId + " Choose of from the list!");
+                        System.out.println("There is no book number: "+ bookId + " Choose of from the list!");
                     }
 
                     OrderItem orderItem = new OrderItem(BookUtils.getNextId(), book, quantity, book.getPrice());
@@ -100,9 +100,6 @@ public class BookShop {
                 } catch (NumberFormatException e) {//handles the cast on line 83,84
                     //if the user types different value on lines 83,84, it shows the message below
                     System.out.println("Invalid input: Please enter a valid number for Book ID and Quantity.");
-                 }  catch (IllegalArgumentException e) {
-                    //shows the personalized message defined above
-                    System.out.println("Invalid input: "+ e.getMessage());
                 }
             }
         }
