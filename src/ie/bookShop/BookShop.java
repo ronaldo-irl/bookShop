@@ -1,5 +1,6 @@
 package ie.bookShop;
 
+import ie.bookShop.BookShopExceptions.GenderException;
 import ie.bookShop.bean.*;
 import ie.bookShop.enums.Gender;
 import ie.bookShop.service.*;
@@ -71,7 +72,7 @@ public class BookShop {
     }
 
     //handles the interaction with the customer
-    private static void customerAction(String action){
+    private static void customerAction(String action) {
         String answer = "";
         List<OrderItem> orderItemList = new ArrayList<>();
         while(!answer.equals("q")){
@@ -230,7 +231,15 @@ public class BookShop {
             customer.setEmail(customerMap.get("Email"));
             customer.setAddress(customerMap.get("Address"));
             customer.setPhoneNumber(customerMap.get("Phone Number"));
-            customer.setGender(Gender.getGender(customerMap.get("Gender")));
+
+            try{
+                customer.setGender(Gender.getGender(customerMap.get("Gender")));
+            }catch (GenderException g){
+                //Show Error Message to customer
+                System.out.println(g.getMessage()+ " Gender will be automatically set to "+Gender.NOT_PROVIDED);
+                //for simplicity, I'm just setting the Gender to NOT_PROVIDED to avoid ask it again
+                customer.setGender(Gender.NOT_PROVIDED);
+            }
 
             if(!customerService.isValidEmailFormat(customer.getEmail())){
                 System.out.println();
