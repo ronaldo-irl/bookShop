@@ -216,10 +216,16 @@ public class BookShop {
         //get customer details
         for(String customerDetail : customerInformation){
             String userInput = getUserInput("Type your => "+ customerDetail +" ");
+            //try to find a user, if it's found, show message to customer
             customer = customerService.getCustomer(userInput);
+            if(!checkIfObjectIsNull(customer)){
+                System.out.println("Customer Already on the System! ");
+                break;
+            }
             customerMap.put(customerDetail, userInput);
         }
-        if(null == customer){
+
+        if(checkIfObjectIsNull(customer)){
             customer = new Customer();
             //populates the customer object
             customer.setCustomerId(BookUtils.getNextId());
@@ -250,7 +256,7 @@ public class BookShop {
         return customer;
     }
 
-    //this method asks the customer what they would like to.
+    //this method handles the messages displayed to the customer
     private static String customerInteraction(String action) {
         switch (action.toLowerCase()) {
             case "feedback":
@@ -275,6 +281,7 @@ public class BookShop {
     }
 
     private static boolean checkIfObjectIsNull(Object param){
+        //lambda function to check if the object "param" is null
         NullObjectChecker<Object> checkObject  = (obj) -> obj == null;
         return checkObject.isNull(param);
     }
