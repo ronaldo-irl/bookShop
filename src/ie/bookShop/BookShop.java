@@ -50,7 +50,7 @@ public class BookShop {
     }
 
     private static void customerWelcome(){
-        System.out.println("====================== Welcome to TUS Book Shop =========================");
+        System.out.println("============================================== Welcome to TUS Book Shop ================================================");
         System.out.println();
         System.out.println( "It's great having you here!! \nExplore our Book Collection Below and Choose Your Favorites");
 
@@ -86,10 +86,11 @@ public class BookShop {
 
                     // Fetches the book by its id
                     Book book = bookService.getBook(bookId);
-                    if(null == book){
+                    if(checkIfObjectIsNull(book)){
                         //if the customers types in a book number that doesn't exit,
                         // the system shows a custom message by throwing this unchecked exception
                         System.out.println("There is no book number: "+ bookId + " Choose of from the list!");
+                        customerAction(CHOICE);
                     }
 
                     OrderItem orderItem = new OrderItem(BookUtils.getNextId(), book, quantity, book.getPrice());
@@ -165,7 +166,7 @@ public class BookShop {
     }
 
     private static void sayGoodBye(String message) {
-        if(null != message){
+        if(!checkIfObjectIsNull(message)){
             System.out.println(" It's a pity you didn't find anything you liked");
         }else{
             System.out.println("Thank you for Shopping with US!!");
@@ -216,10 +217,6 @@ public class BookShop {
         for(String customerDetail : customerInformation){
             String userInput = getUserInput("Type your => "+ customerDetail +" ");
             customer = customerService.getCustomer(userInput);
-            if(null != customer){
-                System.out.println("Customer Already on the System! ");
-                break;
-            }
             customerMap.put(customerDetail, userInput);
         }
         if(null == customer){
@@ -275,5 +272,10 @@ public class BookShop {
         }
 
         return bookType;
+    }
+
+    private static boolean checkIfObjectIsNull(Object param){
+        NullObjectChecker<Object> checkObject  = (obj) -> obj == null;
+        return checkObject.isNull(param);
     }
 }
