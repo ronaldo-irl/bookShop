@@ -4,9 +4,11 @@ import ie.bookShop.BookShopExceptions.GenderException;
 import ie.bookShop.bean.*;
 import ie.bookShop.enums.Gender;
 import ie.bookShop.service.*;
+import ie.bookShop.utils.BookFileHandler;
 import ie.bookShop.utils.BookUtils;
 import ie.bookShop.utils.Constants;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -192,6 +194,12 @@ public class BookShop {
         System.out.println("=================== BOOKS ===================");
         order.getOrderItemList().forEach(book -> System.out.println("Book Title: " + book.getBook().getTitle()));
         System.out.println();
+
+        try {
+            BookFileHandler.createOrderReceipt("output_order.csv", order);
+        } catch (IOException e) {
+            System.out.println("Sorry, We could not create the receipt");
+        }
         getUserRate(order);
     }
 
