@@ -3,9 +3,8 @@ package bookShop;
 import bookShop.BookShopExceptions.GenderException;
 import bookShop.bean.*;
 import bookShop.service.*;
-import ie.bookShop.bean.*;
+import bookShop.utils.LocalizationUtil;
 import bookShop.enums.Gender;
-import ie.bookShop.service.*;
 import bookShop.utils.BookFileHandler;
 import bookShop.utils.BookUtils;
 import bookShop.utils.Constants;
@@ -54,11 +53,12 @@ public class BookShop {
     }
 
     private static void customerWelcome(){
-        System.out.println("============================================== Welcome to TUS Book Shop ================================================");
         System.out.println();
-        System.out.println( "It's great having you here!! \nExplore our Book Collection Below and Choose Your Favorites");
+        //set chosen language
+        LocalizationUtil.setLocale(new Locale("es", "ES"));
+        System.out.println(LocalizationUtil.getMessage("app.welcome") +"\n");
+        System.out.println(LocalizationUtil.getMessage("app.greeting") +"\n");
 
-        System.out.println();
         //call method to print a list of books to the customer
         printBookBasket();
 
@@ -146,9 +146,8 @@ public class BookShop {
         System.out.println("Books Quantity: "+ totalQuantity);
         System.out.println("Order Status: "+order.getOrderStatus());
         System.out.println("Order Date: "+order.getOrderDate());
-        System.out.println("Total Amount: "+ formatPrice(order.getTotalPrice()));
+        System.out.println("Total Amount: "+ formatPrice(order.getTotalPrice()) +"\n");
 
-        System.out.println();
         String userChoice = "To Finish Your Order TYPE: 1 \nTo Cancel and Exit TYPE: 2 \nChoice: ";
 
         try{//get input from the user
@@ -163,8 +162,7 @@ public class BookShop {
                 orderService.deleteOrder(order);
             }
         }catch (NumberFormatException nfe){
-            System.out.println("Invalid INPUT!!");
-            System.out.println();
+            System.out.println("Invalid INPUT!!"+"\n");
             createOrderSummary(order);
         }
     }
@@ -191,8 +189,8 @@ public class BookShop {
         System.out.println("Shipping Address: "+ customer.getAddress());
         System.out.println("Order Status: "+order.getOrderStatus());
         System.out.println("Order Date: "+order.getOrderDate());
-        System.out.println("Total Amount: "+ formatPrice(order.getTotalPrice()));
-        System.out.println();
+        System.out.println("Total Amount: "+ formatPrice(order.getTotalPrice())+"\n");
+
         System.out.println("=================== BOOKS ===================");
         order.getOrderItemList().forEach(book -> System.out.println("Book Title: " + book.getBook().getTitle()));
         System.out.println();
@@ -286,7 +284,6 @@ public class BookShop {
             case EBook eBook -> bookType = "Ebook";
             default -> bookType = "Not Found";
         }
-
         return bookType;
     }
 
