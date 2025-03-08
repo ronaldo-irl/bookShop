@@ -1,6 +1,6 @@
-package ie.bookShop.service;
+package bookShop.service;
 
-import ie.bookShop.bean.Book;
+import bookShop.bean.Book;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -1,6 +1,6 @@
-package ie.bookShop.service;
+package bookShop.service;
 
-import ie.bookShop.bean.Customer;
+import bookShop.bean.Customer;
 
 import java.util.List;
 

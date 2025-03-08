@@ -1,4 +1,4 @@
-package ie.bookShop.BookShopExceptions;
+package bookShop.BookShopExceptions;
 
 public class GenderException extends Exception{
     public GenderException(String message){

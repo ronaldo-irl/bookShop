@@ -1,10 +1,10 @@
-package ie.bookShop.service;
+package bookShop.service;
 
-import ie.bookShop.bean.Book;
-import ie.bookShop.bean.EBook;
-import ie.bookShop.bean.PhysicalBook;
-import ie.bookShop.enums.Genre;
-import ie.bookShop.utils.BookUtils;
+import bookShop.bean.Book;
+import bookShop.bean.EBook;
+import bookShop.bean.PhysicalBook;
+import bookShop.enums.Genre;
+import bookShop.utils.BookUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

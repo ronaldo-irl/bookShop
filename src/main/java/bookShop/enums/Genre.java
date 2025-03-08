@@ -1,4 +1,4 @@
-package ie.bookShop.enums;
+package bookShop.enums;
 
 public enum Genre {
     FICTION,

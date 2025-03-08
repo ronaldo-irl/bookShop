@@ -1,4 +1,4 @@
-package ie.bookShop.utils;
+package bookShop.utils;
 
 public class Constants {
 

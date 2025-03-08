@@ -1,6 +1,6 @@
-package ie.bookShop.bean;
+package bookShop.bean;
 
-import ie.bookShop.enums.Gender;
+import bookShop.enums.Gender;
 
 public class Customer {
     private Integer customerId;

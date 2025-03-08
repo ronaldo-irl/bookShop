@@ -1,13 +1,12 @@
-package ie.bookShop.service;
+package bookShop.service;
 
 
-import ie.bookShop.bean.Customer;
-import ie.bookShop.enums.Gender;
-import ie.bookShop.utils.BookUtils;
+import bookShop.bean.Customer;
+import bookShop.enums.Gender;
+import bookShop.utils.BookUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class CustomerServiceImpl implements CustomerService {

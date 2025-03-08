@@ -1,6 +1,4 @@
-package ie.bookShop.bean;
-
-import ie.bookShop.utils.BookUtils;
+package bookShop.bean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

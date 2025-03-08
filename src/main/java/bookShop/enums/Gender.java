@@ -1,6 +1,6 @@
-package ie.bookShop.enums;
+package bookShop.enums;
 
-import ie.bookShop.BookShopExceptions.GenderException;
+import bookShop.BookShopExceptions.GenderException;
 
 public enum Gender {
     MALE,

@@ -1,18 +1,20 @@
-package ie.bookShop;
+package bookShop;
 
-import ie.bookShop.BookShopExceptions.GenderException;
+import bookShop.BookShopExceptions.GenderException;
+import bookShop.bean.*;
+import bookShop.service.*;
 import ie.bookShop.bean.*;
-import ie.bookShop.enums.Gender;
+import bookShop.enums.Gender;
 import ie.bookShop.service.*;
-import ie.bookShop.utils.BookFileHandler;
-import ie.bookShop.utils.BookUtils;
-import ie.bookShop.utils.Constants;
+import bookShop.utils.BookFileHandler;
+import bookShop.utils.BookUtils;
+import bookShop.utils.Constants;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-import static ie.bookShop.service.BookService.formatPrice;
+import static bookShop.service.BookService.formatPrice;
 
 public class BookShop {
 

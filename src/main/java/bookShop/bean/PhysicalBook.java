@@ -1,6 +1,6 @@
-package ie.bookShop.bean;
+package bookShop.bean;
 
-import ie.bookShop.enums.Genre;
+import bookShop.enums.Genre;
 
 import java.math.BigDecimal;
 

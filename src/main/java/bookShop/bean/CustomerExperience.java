@@ -1,4 +1,4 @@
-package ie.bookShop.bean;
+package bookShop.bean;
 
 import java.time.LocalDate;
 

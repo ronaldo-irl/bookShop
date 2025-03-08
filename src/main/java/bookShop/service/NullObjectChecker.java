@@ -1,4 +1,4 @@
-package ie.bookShop.service;
+package bookShop.service;
 
 @FunctionalInterface
 public interface NullObjectChecker<T> {

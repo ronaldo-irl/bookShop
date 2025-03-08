@@ -1,12 +1,12 @@
-package ie.bookShop.utils;
+package bookShop.utils;
 
-import ie.bookShop.bean.Order;
+import bookShop.bean.Order;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
 
-import static ie.bookShop.service.BookService.formatPrice;
+import static bookShop.service.BookService.formatPrice;
 
 public class BookFileHandler {
 
@@ -23,7 +23,7 @@ public class BookFileHandler {
             lines.add(item.getBook().getAuthor());
             lines.add(String.valueOf(item.getBook().getPrice()));
         });
-
+        /// write the content to output file
         Files.write(Paths.get(filePath), lines);
     }
 }
