@@ -4,6 +4,7 @@ import bookShop.bean.Book;
 import bookShop.bean.EBook;
 import bookShop.bean.PhysicalBook;
 import bookShop.enums.Genre;
+import bookShop.generic.GenericBookSorter;
 import bookShop.utils.BookUtils;
 
 import java.math.BigDecimal;
@@ -76,5 +77,14 @@ public class BookServiceImpl implements BookService {
     public List<Book> bookBasket(String name) {
         return this.bookList.stream().filter(book -> book.getTitle().equalsIgnoreCase(name))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void sortBooksByUserChoice(String userChoice) {
+        if("author".equalsIgnoreCase(userChoice)){
+            GenericBookSorter.sortByKey(this.bookBasket(), Book::getAuthor);
+        }else {
+            GenericBookSorter.sortByKey(this.bookBasket(), Book::getTitle);
+        }
     }
 }

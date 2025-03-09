@@ -65,11 +65,22 @@ public class BookShop {
     }
 
     private static void printBookBasket() {
+        String choice = getUserInput("Type => Author <= to see the book list ordered by author's name \n" +
+                        "Or Type => Title <= to see the book list ordered by title \n" +
+                        "Option: ");
+
+        if(!choice.equalsIgnoreCase("author") && !choice.equalsIgnoreCase("title") ){
+            System.out.println("Option not valid! Please try again \n");
+            printBookBasket();
+        }
+        //sort book list by user's choice
+        bookService.sortBooksByUserChoice(choice);
+
         List<Book> bookBasket = bookService.bookBasket();
-        System.out.println("Book Number ----- Book Name ------------------------------------------------------------------ Book Price ------Book Type");
+        System.out.println("Book Number ----- Author  ------------------------------------------ Book Name ------------------------------------------------------------------ Book Price -----Book Type");
         //loop through the list of books and print: BookId, Book Title, Book Price and Book Type
         bookBasket.forEach(book -> {
-            System.out.printf("%-17s %-76s %-15s %-1s %n", book.getBookId(), book.getTitle(), formatPrice(book.getPrice()), getBookType(book));
+            System.out.printf("%-17s %-50s %-76s %-15s %-1s %n", book.getBookId(), book.getAuthor(), book.getTitle(), formatPrice(book.getPrice()), getBookType(book));
         } );
 
         System.out.println();
@@ -217,8 +228,7 @@ public class BookShop {
         Map<String, String> customerMap = new HashMap<>();
         Customer customer = null;
         System.out.println();
-        //this array will be used to get the information from the customer
-        //and store in a map
+        //this array will be used to get the information from the customer and store in a map
         String[] customerInformation = new String[]{"First Name", "Last Name", "Email", "Address", "Phone Number", "Gender"};
 
         //get customer details

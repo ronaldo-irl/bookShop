@@ -20,4 +20,6 @@ public interface BookService {
     List<Book> bookBasket();
 
     List<Book> bookBasket(String name);
+
+    void sortBooksByUserChoice(String userChoice);
 }
