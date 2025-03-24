@@ -211,8 +211,21 @@ public class BookShop {
         } catch (IOException e) {
             System.out.println("Sorry, We could not create the receipt");
         }
+
+        Thread countdownThread = runCountdown(10);
+        try {
+            //waits until the 10 seconds is done
+            countdownThread.join();
+        } catch (InterruptedException e) {
+            //stops in case some error occurs
+            Thread.currentThread().interrupt();
+        }
+
         getUserRate(order);
+
+
     }
+
 
     private static void getUserRate(Order order) {
         //get customer feedback
@@ -301,5 +314,25 @@ public class BookShop {
         //lambda function to check if the object "param" is null
         NullObjectChecker<Object> checkObject  = (obj) -> obj == null;
         return checkObject.isNull(param);
+    }
+
+    private static Thread runCountdown(int seconds) {
+        Thread thread = new Thread(() -> {
+            System.out.println("Creating receipt... Please wait while we generate it.");
+            for (int i = seconds; i >= 0; i--) {
+                System.out.print("\rGetting there in: " + i + " seconds");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    //stops the thread
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+            System.out.println("\n \nHow did we do?");
+        });
+
+        thread.start();
+        return thread;
     }
 }
